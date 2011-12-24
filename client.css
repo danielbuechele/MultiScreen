@@ -1,0 +1,144 @@
+body {
+    background-color: black;
+    overflow: hidden;
+}
+
+* {
+-webkit-box-shadow: 0 0 1px transparent;
+}
+
+#allBlack {
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: black;
+    display:none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.screen {
+    background-color: black;
+    position: absolute;
+}
+
+.screen img, .screen video {
+    width: 100%;
+    height: 100%;
+}
+
+#screen1 {
+width: 219px;
+height: 230px;
+top: 270px;
+left: 8px;
+-webkit-transform: rotate(-7.1deg);
+
+}
+
+#screen2 {
+width: 257px;
+height: 272px;
+top: 227px;
+left: 232px;
+-webkit-transform: rotate(2.2deg);
+}
+
+#screen3 {
+width: 259px;
+height: 276px;
+top: 207px;
+left: 505px;
+-webkit-transform: rotate(-10deg);
+}
+
+#screen4 {
+width: 189px;
+height: 189px;
+top: 30px;
+left: 560px;
+-webkit-transform: rotate(0deg);
+}
+
+
+#screen5 {
+width: 459px;
+height: 455px;
+top: 80px;
+left: 81px;
+-webkit-transform: rotate(83deg);
+z-index: 1;
+}
+
+#black5 {
+position: absolute;
+width: 100px;
+height: 100px;
+top: -38px;
+left: 414px;
+z-index: 3;
+ background-color: black;
+}
+
+#screen6 {
+width: 275px;
+height: 254px;
+top: 135px;
+left: 526px;
+-webkit-transform: rotate(80.7deg);
+z-index: 2;
+}
+
+
+#screen7 {
+width: 432px;
+height: 464px;
+top: 94px;
+left: 45px;
+-webkit-transform: rotate(9.7deg);
+
+}
+
+#screen8 {
+width: 304px;
+height: 330px;
+top: 186px;
+left: 477px;
+-webkit-transform: rotate(1deg);
+}
+
+
+
+.black, .white, .image, .image2, .video {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.black {
+    background-color: black;
+    z-index: 100;
+    display: none;
+}
+
+.white {
+    background-color: white;
+    z-index: 99;
+    display: block;
+    border: 2px solid white;
+}
+
+.image2 {
+    z-index: 5;
+}
+
+.image {
+    z-index: 10;
+}
+
+.video {
+    z-index: 20;
+}

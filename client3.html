@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket - Simple Client</title>
+    <link rel="stylesheet" type="text/css" href="client.css" />
+
+    <script type="text/javascript" src="jquery.js"></script>
+
+    
+    <script type="text/javascript">    
+    
+    var audio = new Audio("cheese.wav");
+        
+	$(function() {
+		// bind form
+		$('#payload-form').submit(function() {
+			var payload = ($("input#payload").val());
+			socket.send(payload);  // write to server
+			return false;
+		});
+
+		// open websocket
+		var socket = new WebSocket('ws://newton.local:8078');
+
+		socket.onopen = function() {
+	    	// Web Socket is connected. send an initial random message.
+	    	socket.send('Client 3 connected.');
+	    };
+	    
+	    socket.onclose = function() {
+	    	died();
+	    };
+	    
+		// append to '#log' whatever server pushes.
+		socket.onmessage = function(ev){
+
+			msg = JSON.parse(ev.data);
+			
+			if (msg=="allBlack") {allBlack();}
+			else if (msg=="noBlack") {noBlack();}
+			else if (msg=="reload") {window.location.reload();}
+			else if (msg=="created") {created();}
+			else {loadScene(msg);}
+		}
+	})
+	
+	function died() {
+	   $(".screen").css("border-color","red");
+	}
+	
+    function created() {        
+        audio.play();
+        $("#screen5 .white").show();
+        $("#allBlack").hide();
+        $("#screen5 .image").show();
+        $("#screen5 .image").attr("src","0001.JPG");
+        $("#screen5 .white").fadeOut(1000,function(){});
+    }
+    
+    function allBlack() {
+        $("#allBlack").fadeIn();
+    }
+    
+    function noBlack() {
+        $("#allBlack").fadeOut();
+    }
+    
+    function loadScene(no) {
+        var url = "scenes/"+no+".txt";
+        console.log(url);
+        
+
+        $.get(url, function(data) {
+            
+            
+            scene = JSON.parse(data);
+            
+            for (var key in scene.media) {
+                console.log(scene.media[key]);
+                if (scene.media[key].slice(-3) == "mov") {
+                    $("#"+key+" .white").hide();
+                    $("#"+key+" .black").hide();
+                    $("#"+key+" .image").hide();
+                    $("#"+key+" .image2").hide();
+
+                    $("#"+key+" .video").show();
+                    $("#"+key+" .video").attr("src","scenes/"+scene.media[key]);
+                } else {
+                    if($("#"+key+" .video").get(0) != undefined) {
+                        $("#"+key+" .video").get(0).pause();
+                    }
+                    $("#"+key+" .video").hide();
+                    if (scene.effect == "flash") {
+                        $("#"+key+" .white").show();
+                        $("#"+key+" .image").show();
+                        $("#"+key+" .image").attr("src","scenes/"+scene.media[key]);
+                        $("#"+key+" .white").fadeOut();
+                    
+                    } else if (scene.effect == "fade") {
+                        $("#"+key+" .white").fadeOut();
+                        $("#"+key+" .image2").attr("src","scenes/"+scene.media[key]);
+                        $("#"+key+" .image").fadeOut('normal',function () {
+                            $("#"+key+" .image").attr("src","scenes/"+scene.media[key]);
+                            $("#"+key+" .image").show();
+                        });
+                    }
+
+                }
+                
+            }
+            
+        });
+    }
+    
+
+
+    </script>
+</head>
+<body>
+    <div id="allBlack"></div>
+    
+    <div id="screen7" class="screen">
+        <div class="black"></div>
+        <div class="white"></div>
+        <img class="image" src="" alt="" />
+        <img class="image2" src="" alt="" />
+        <video class="video" muted autoplay src="" />
+    </div>
+    
+    <div id="screen8" class="screen">
+        <div class="black"></div>
+        <div class="white"></div>
+        <img class="image" src="" alt="" />
+        <img class="image2" src="" alt="" />
+        <video class="video" muted autoplay src="" />
+    </div>
+    
+
+
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+    "effect": "flash",
+    "media": {
+        "screen1": "newyork/n1.jpg",
+        "screen2": "newyork/n2.jpg",
+        "screen3": "newyork/n3.jpg",
+        "screen4": "newyork/n4.jpg",
+        "screen5": "newyork/n5.jpg",
+        "screen6": "newyork/n6.jpg",
+        "screen7": "newyork/n7.jpg",
+        "screen8": "newyork/n8.jpg"
+    }
+}

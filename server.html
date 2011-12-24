@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket - Simple Client</title>
+
+
+    <script type="text/javascript" src="jquery.js"></script>
+    
+    <script type="text/javascript">    
+    var socket;
+
+    
+    $(document).ready(function () {
+        reconnect();
+        $("#payload").focus();
+    });
+    
+    function clear() {
+        $("#log").text("");
+    }
+    
+    function sendSignal(signal) {
+        $("#payload").val(signal);
+        $("form").submit();
+    }
+    
+   
+	function reconnect() {
+	   
+		// bind form
+		$('#payload-form').submit(function() {
+			var payload = ($("input#payload").val());
+			socket.send(payload);  // write to server
+			$("#payload").focus();
+			return false;
+		});
+
+		// open websocket
+		socket = new WebSocket('ws://newton.local:8078');
+	    
+	    socket.onclose = function() {
+            $('#log').prepend('connection lost.</br>');            
+	    };
+	    
+        socket.onopen = function() {
+            $('#log').prepend('connected<br />');
+        }
+
+		// append to '#log' whatever server pushes.
+		socket.onmessage = function(ev){
+			msg = JSON.parse(ev.data);
+			$('#log').prepend(JSON.stringify(msg) + '</br>');
+		}
+	}
+	
+	
+
+
+    </script>
+</head>
+<body>
+
+
+	<div id='payload-container'>
+		<form id='payload-form'>
+			<input type='text' name='payload' id='payload' value='Hello World' style="width:500px;"/>
+			<input type='submit' value='push' id="push" /><a href="javascript:sendSignal('black')">black</a> <a href="javascript:sendSignal('white')">white</a> <a href="javascript:clear()">clear</a> <a href="javascript:sendSignal('ea')">ea</a>
+		</form>
+	</div>
+
+	<div id='log' style='display:block; border:1px solid lightgray;'></div>
+</body>
+</html>
